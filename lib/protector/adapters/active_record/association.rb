@@ -31,6 +31,16 @@ module Protector
           return build_record_without_protector(*args) unless protector_subject?
           build_record_without_protector(*args).restrict!(protector_subject)
         end
+
+        # AR 4.2 hack - Disable skip_statement_cache?
+        #
+        # AR will only ask for scoping if skip_statement_cache? = true
+        # skip_statement_cache? will only return true if there is a scope
+        #
+        # So we're it will never call the protect block to get the scope
+        def skip_statement_cache?
+          true
+        end
       end
     end
   end
