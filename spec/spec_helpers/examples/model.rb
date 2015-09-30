@@ -477,6 +477,13 @@ shared_examples_for "a model" do
           Dummy.first.restrict!('-').fluffies.empty?.should == true
         end
       end
+      context "eager load" do
+        it "loads" do
+          Dummy.eager_load(:fluffies).first.restrict!('!').fluffies.empty?.should == true
+          Dummy.eager_load(:fluffies).first.restrict!('+').fluffies.length.should == 1
+          Dummy.eager_load(:fluffies).first.restrict!('-').fluffies.empty?.should == true
+        end
+      end
     end
 
     context "(belongs_to)" do
