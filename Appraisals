@@ -39,6 +39,12 @@ appraise "Rails_4" do
   gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 end
 
+appraise "Rails_5.0.1" do
+  gem "combustion", github: "pat/combustion", ref: "50a946b5a7ab3d9249f0e5fcebbb73488a91b1e5"
+  gem "rails", "5.0.1"
+  gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
+end
+
 appraise "Sequel" do
   gem "sequel", "3.30.0"
 end
