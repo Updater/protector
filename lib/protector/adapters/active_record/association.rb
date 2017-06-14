@@ -40,11 +40,11 @@ module Protector
         # skip_statement_cache? will only return true if there is a scope
         #
         # So we're it will never call the protect block to get the scope
-        def skip_statement_cache?
-          return super unless protector_subject?
+        #def skip_statement_cache?
+        #  return super unless protector_subject?
 
-          true
-        end
+        #  true
+        #end
       end
     end
   end
