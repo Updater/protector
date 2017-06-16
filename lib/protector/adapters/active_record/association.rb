@@ -16,6 +16,7 @@ module Protector
             alias_method 'scoped', 'scope_with_protector'
           end
 
+          alias_method_chain :reader, :protector
           alias_method_chain :build_record, :protector
         end
 
@@ -30,6 +31,13 @@ module Protector
         def build_record_with_protector(*args)
           return build_record_without_protector(*args) unless protector_subject?
           build_record_without_protector(*args).restrict!(protector_subject)
+        end
+
+        # Reader has to be explicitly overrided for cases when the
+        # loaded association is cached
+        def reader_with_protector(*args)
+          return reader_without_protector(*args) unless protector_subject?
+          reader_without_protector(*args).try :restrict!, protector_subject
         end
 
         # AR 4.2 hack - Disable skip_statement_cache?
