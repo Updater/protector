@@ -25,13 +25,13 @@ RSpec.configure do |config|
   config.filter_run :focus
 
   # config.after(:suite) do
-  #   if SimpleCov.running
-  #     silence_stream(STDOUT) do
-  #       SimpleCov::Formatter::HTMLFormatter.new.format(SimpleCov.result)
-  #     end
-  #
-  #     SimpleCov::Formatter::SummaryFormatter.new.format(SimpleCov.result)
-  #   end
+  #   # if SimpleCov.running
+  #   #   # silence_stream(STDOUT) do
+  #   #   #   SimpleCov::Formatter::HTMLFormatter.new.format(SimpleCov.result)
+  #   #   # end
+
+  #   #   # SimpleCov::Formatter::SummaryFormatter.new.format(SimpleCov.result)
+  #   # end
   # end
 
   # Run specs in random order to surface order dependencies. If you find an

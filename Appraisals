@@ -8,20 +8,20 @@ appraise "AR_5.0.x" do
   gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 end
 
-appraise "Rails_4.2" do
-  gem "combustion", github: "pat/combustion", ref: "50a946b5a7ab3d9249f0e5fcebbb73488a91b1e5"
-  gem "rails", "~> 4.2.0"
-  gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
-end
-
 appraise "AR_5.1.1" do
   gem "activerecord", "~> 5.1.1", require: "active_record"
   gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 end
 
 appraise "Rails_4.2" do
-  gem "combustion", github: "pat/combustion", ref: "50a946b5a7ab3d9249f0e5fcebbb73488a91b1e5"
+  gem "combustion"
   gem "rails", "~> 4.2.0"
+  gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
+end
+
+appraise "Rails_5.0.1" do
+  gem "combustion"
+  gem "rails", "~> 5.0.1"
   gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 end
 
@@ -31,8 +31,3 @@ appraise "Rails_5.1" do
   gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 end
 
-appraise "Rails_5.0.1" do
-  gem "combustion", github: "pat/combustion", ref: "50a946b5a7ab3d9249f0e5fcebbb73488a91b1e5"
-  gem "rails", "~> 5.0.1"
-  gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
-end
