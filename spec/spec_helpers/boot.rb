@@ -1,18 +1,18 @@
 require 'simplecov'
 require 'simplecov-summary'
 
-SimpleCov.start do
-  command_name File.basename(ENV['BUNDLE_GEMFILE'], '.gemfile')
-
-  add_filter '/spec/'
-
-  add_group 'DSL',          'lib/protector/dsl.rb'
-  add_group 'Railtie',      'lib/protector/engine.rb'
-  add_group 'ActiveRecord', 'lib/protector/adapters/active_record'
-  add_group 'Sequel',       'lib/protector/adapters/sequel'
-
-  at_exit do; end
-end
+# SimpleCov.start do
+#   command_name File.basename(ENV['BUNDLE_GEMFILE'], '.gemfile')
+#
+#   add_filter '/spec/'
+#
+#   add_group 'DSL',          'lib/protector/dsl.rb'
+#   add_group 'Railtie',      'lib/protector/engine.rb'
+#   add_group 'ActiveRecord', 'lib/protector/adapters/active_record'
+#   add_group 'Sequel',       'lib/protector/adapters/sequel'
+#
+#   at_exit do; end
+# end
 
 Bundler.require
 
