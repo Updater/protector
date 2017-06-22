@@ -125,7 +125,11 @@ module Protector
         private
         def protector_ensure_destroyable
           return true unless protector_subject?
-          destroyable?
+          if ::ActiveRecord::VERSION::MAJOR < 5
+            destroyable?
+          else
+            throw :abort unless destroyable?
+          end
         end
       end
     end
