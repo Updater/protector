@@ -2,6 +2,7 @@ require 'protector/adapters/active_record/base'
 require 'protector/adapters/active_record/association'
 require 'protector/adapters/active_record/singular_association'
 require 'protector/adapters/active_record/relation'
+require 'protector/adapters/active_record/calculations'
 require 'protector/adapters/active_record/collection_proxy'
 require 'protector/adapters/active_record/preloader'
 require 'protector/adapters/active_record/strong_parameters'
@@ -18,6 +19,7 @@ module Protector
         ::ActiveRecord::Base.send :include, Protector::Adapters::ActiveRecord::Base
         ::ActiveRecord::Base.send :include, Protector::Adapters::ActiveRecord::Validations
         ::ActiveRecord::Relation.send :include, Protector::Adapters::ActiveRecord::Relation
+        ::ActiveRecord::Relation.send :include, Protector::Adapters::ActiveRecord::Calculations
         ::ActiveRecord::Associations::SingularAssociation.send :include, Protector::Adapters::ActiveRecord::Association
         ::ActiveRecord::Associations::SingularAssociation.send :include, Protector::Adapters::ActiveRecord::SingularAssociation
         ::ActiveRecord::Associations::CollectionAssociation.send :include, Protector::Adapters::ActiveRecord::Association

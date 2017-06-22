@@ -13,7 +13,7 @@ if defined?(ActiveRecord)
         included do |klass|
           protect do |x|
             if x == '-'
-              scope{ where('1=0') } 
+              scope{ where('1=0') }
             elsif x == '+'
               scope{ where(klass.table_name => {number: 999}) }
             end

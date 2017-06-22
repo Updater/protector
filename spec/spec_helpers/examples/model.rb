@@ -443,7 +443,7 @@ shared_examples_for "a model" do
       dummy.instance_eval do
         protect do; end
       end
-
+      binding.pry
       d = dummy.create.restrict!('!')
       d.should survive
     end
