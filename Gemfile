@@ -35,6 +35,7 @@ gem "jdbc-sqlite3", :platform=>:jruby, :require=>"jdbc/sqlite3"
 gem "ruby-prof", :platform=>:ruby
 # gem 'activerecord', :git => 'https://github.com/rails/rails.git', tag: 'v5.1.2.rc1', :require=>"active_record"
 gem "activerecord", "~> 5.1.1", :require=>"active_record"
+# gem "activerecord", "~> 5.0.4", :require=>"active_record"
 #gem "activerecord", "~> 4.1.13", :require=>"active_record"
 gem "activerecord-jdbcsqlite3-adapter", :platform=>:jruby, :github=>"jruby/activerecord-jdbc-adapter"
 gem "awesome_print"
