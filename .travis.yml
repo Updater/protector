@@ -1,20 +1,14 @@
 rvm:
-  - 1.9.3
-  - jruby-19mode
-  - 2.0.0
   - 2.1.0
+  - 2.2.3
 
 matrix:
   allow_failures:
     - gemfile: gemfiles/AR_edge.gemfile
 
 gemfile:
-  - gemfiles/AR_3.2.gemfile
-  - gemfiles/AR_4.gemfile
-  - gemfiles/AR_4.2.gemfile
   - gemfiles/AR_edge.gemfile
-  - gemfiles/Rails_3.2.gemfile
-  - gemfiles/Rails_4.gemfile
+  - gemfiles/Rails_5.1.1.gemfile
   - gemfiles/Sequel.gemfile
 
 script: bundle exec rspec
