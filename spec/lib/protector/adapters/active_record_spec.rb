@@ -406,6 +406,7 @@ if defined?(ActiveRecord)
           d = Dummy.restrict!('+').includes(:fluffies)
           d.length.should == 2
           d.first.fluffies.length.should == 1
+          expect(d.first.fluffies.first.visible?).to eq true
         end
 
         context "joined to filtered association" do
@@ -413,6 +414,7 @@ if defined?(ActiveRecord)
             d = Dummy.restrict!('+').includes(:fluffies).where(fluffies: {string: 'zomgstring'})
             d.length.should == 2
             d.first.fluffies.length.should == 1
+            expect(d.first.fluffies.first.visible?).to eq true
           end
         end
 
@@ -423,7 +425,10 @@ if defined?(ActiveRecord)
             )
             d.length.should == 2
             d.first.fluffies.length.should == 1
+            expect(d.first.fluffies.first.visible?).to eq true
             d.first.bobbies.length.should == 2
+            expect(d.first.bobbies.first.visible?).to eq true
+            expect(d.first.bobbies.second.visible?).to eq true
           end
         end
 
