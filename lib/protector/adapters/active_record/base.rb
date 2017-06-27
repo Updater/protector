@@ -21,7 +21,19 @@ module Protector
           # Drops {Protector::DSL::Meta::Box} cache when subject changes
           def restrict!(*args)
             @protector_meta = nil
-            super
+            result = super
+
+            # If association is loaded before we can restrict!
+            # we need to update the cache
+            result.instance_variable_get(:@association_cache).keys.each do |asso_name|
+              association = result.association(asso_name)
+              association.restrict!(*args)
+              if association.target.is_a?(Array)
+                association.target.each { |rec| rec.restrict!(*args) }
+              end
+            end
+
+            result
           end
 
           if !Protector::Adapters::ActiveRecord.modern?
