@@ -9,12 +9,15 @@ module Protector
           included do
             # AR 4 has renamed `scoped` to `scope`
             if method_defined?(:scope)
-              alias_method_chain :scope, :protector
+              alias_method 'scope_without_protector', 'scope'
+              alias_method 'scope', 'scope_with_protector'
             else
               alias_method 'scope_without_protector', 'scoped'
               alias_method 'scoped', 'scope_with_protector'
             end
           end
+
+          # def
 
           # Gets current subject of preloading association
           def protector_subject
@@ -32,9 +35,15 @@ module Protector
             return scope_without_protector unless protector_subject?
 
             @meta ||= klass.protector_meta.evaluate(protector_subject)
-
-            scope_without_protector.merge(@meta.relation)
+            # binding.pry
+            scope_without_protector.merge(@meta.relation).restrict!(protector_subject)
           end
+
+          # def scope_with_protector(*args)
+          #   scope = scope_without_protector(*args)
+          #   scope = scope.restrict!(protector_subject) if protector_subject?
+          #   scope
+          # end
         end
       end
     end

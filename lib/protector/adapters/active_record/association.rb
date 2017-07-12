@@ -10,13 +10,18 @@ module Protector
 
           # AR 4 has renamed `scoped` to `scope`
           if method_defined?(:scope)
-            alias_method_chain :scope, :protector
+            alias_method 'scope_without_protector', 'scope'
+            alias_method 'scope', 'scope_with_protector'
           else
             alias_method 'scope_without_protector', 'scoped'
             alias_method 'scoped', 'scope_with_protector'
           end
 
-          alias_method_chain :build_record, :protector
+          alias_method 'build_record_without_protector', 'build_record'
+          alias_method 'build_record', 'build_record_with_protector'
+
+          alias_method 'reader_without_protector', 'reader'
+          alias_method 'reader', 'reader_with_protector'
         end
 
         # Wraps every association with current subject
@@ -26,9 +31,16 @@ module Protector
           scope
         end
 
+        def reader_with_protector(*args)
+          # binding.pry
+          return reader_without_protector(*args) unless protector_subject?
+          reader_without_protector(*args).try :restrict!, protector_subject
+        end
+
         # Forwards protection subject to the new instance
         def build_record_with_protector(*args)
           return build_record_without_protector(*args) unless protector_subject?
+
           build_record_without_protector(*args).restrict!(protector_subject)
         end
 

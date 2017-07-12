@@ -8,10 +8,14 @@ module Protector
         included do
           include Protector::DSL::Base
 
-          alias_method_chain :exec_queries, :protector
-          alias_method_chain :new, :protector
-          alias_method_chain :create, :protector
-          alias_method_chain :create!, :protector
+          alias_method :exec_queries_without_protector, :exec_queries
+          alias_method :exec_queries, :exec_queries_with_protector
+          alias_method :new_without_protector, :new
+          alias_method :new, :new_with_protector
+          alias_method :create_without_protector, :create
+          alias_method :create, :create_with_protector
+          alias_method :create_without_protector!, :create!
+          alias_method :create!, :create_with_protector!
 
           # AR 3.2 workaround. Come on, guys... SQL parsing :(
           unless method_defined?(:references_values)
@@ -61,22 +65,6 @@ module Protector
         def only(*args)
           return super unless protector_subject?
           super.restrict!(protector_subject)
-        end
-
-        # @note This is here cause `NullRelation` can return `nil` from `count`
-        def count(*args)
-          super || 0
-        end
-
-        # @note This is here cause `NullRelation` can return `nil` from `sum`
-        def sum(*args)
-          super || 0
-        end
-
-        # Merges current relation with restriction and calls real `calculate`
-        def calculate(*args)
-          return super unless protector_subject?
-          protector_relation.unrestrict!.calculate(*args)
         end
 
         # Merges current relation with restriction and calls real `exists?`
@@ -160,6 +148,7 @@ module Protector
         # security scope of proper class otherwise
         def protector_substitute_includes(subject, relation)
           if relation.eager_loading?
+            relation.reset
             protector_expand_inclusion(relation.includes_values + relation.eager_load_values).each do |klass, path|
               # AR drops default_scope for eagerly loadable associations
               # https://github.com/inossidabile/protector/issues/3
@@ -179,6 +168,7 @@ module Protector
               end
             end
           else
+            relation.reset
             relation.preload_values += includes_values
             relation.includes_values = []
           end

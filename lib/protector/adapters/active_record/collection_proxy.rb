@@ -6,9 +6,21 @@ module Protector
         extend ActiveSupport::Concern
         delegate :protector_subject, :protector_subject?, :to => :@association
 
+        def protector_relation
+          result = super
+          result.instance_variable_set(:@association, self.instance_variable_get(:@association).clone)
+          result
+        end
+
         def restrict!(*args)
           @association.restrict!(*args)
-          self
+          @association.target.each { |m| m.restrict!(*args) }
+          super
+        end
+
+        def unrestrict!
+          @association.unrestrict!
+          super
         end
       end
     end

@@ -21,7 +21,17 @@ module Protector
           # Drops {Protector::DSL::Meta::Box} cache when subject changes
           def restrict!(*args)
             @protector_meta = nil
-            super
+            result = super
+            # binding.pry
+            result.instance_variable_get(:@association_cache).keys.each do |asso_name|
+              association = result.association(asso_name)
+              association.restrict!(*args)
+              if association.target.is_a?(Array)
+                association.target.each { |rec| rec.restrict!(*args) }
+              end
+            end
+
+            result
           end
 
           if !Protector::Adapters::ActiveRecord.modern?
@@ -125,7 +135,7 @@ module Protector
         private
         def protector_ensure_destroyable
           return true unless protector_subject?
-          destroyable?
+          throw :abort unless destroyable?
         end
       end
     end
