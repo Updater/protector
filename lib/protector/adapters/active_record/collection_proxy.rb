@@ -14,6 +14,7 @@ module Protector
 
         def restrict!(*args)
           @association.restrict!(*args)
+          @association.target.each { |m| m.restrict!(*args) }
           super
         end
 

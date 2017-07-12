@@ -22,6 +22,7 @@ module Protector
           def restrict!(*args)
             @protector_meta = nil
             result = super
+            # binding.pry
             result.instance_variable_get(:@association_cache).keys.each do |asso_name|
               association = result.association(asso_name)
               association.restrict!(*args)

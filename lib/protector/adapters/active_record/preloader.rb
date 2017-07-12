@@ -17,6 +17,8 @@ module Protector
             end
           end
 
+          # def
+
           # Gets current subject of preloading association
           def protector_subject
             # Owners are always loaded from the single source
@@ -33,9 +35,15 @@ module Protector
             return scope_without_protector unless protector_subject?
 
             @meta ||= klass.protector_meta.evaluate(protector_subject)
-
+            # binding.pry
             scope_without_protector.merge(@meta.relation).restrict!(protector_subject)
           end
+
+          # def scope_with_protector(*args)
+          #   scope = scope_without_protector(*args)
+          #   scope = scope.restrict!(protector_subject) if protector_subject?
+          #   scope
+          # end
         end
       end
     end
