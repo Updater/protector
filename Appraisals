@@ -22,12 +22,12 @@ end
 appraise "Rails_5.0.1" do
   gem "combustion"
   gem "rails", "~> 5.0.1"
-  #gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
+  gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 end
 
 appraise "Rails_5.1" do
   gem "combustion"
   gem "rails", "~> 5.1.1"
-  #gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
+  gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 end
 
