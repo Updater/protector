@@ -91,7 +91,7 @@ if defined?(ActiveRecord)
           protect do; end
         end
 
-        expect { dummy.restrict!('!').create!(string: 'test').delete }.to raise_error
+        expect { dummy.restrict!('!').create!(string: 'test').delete }.to raise_error ActiveRecord::RecordInvalid
       end
 
       it "validates on new{}" do
@@ -114,7 +114,7 @@ if defined?(ActiveRecord)
         end
 
         expect { dummy.restrict!('!').find(1) }.to_not raise_error
-        expect { dummy.restrict!('!').find(2) }.to raise_error
+        expect { dummy.restrict!('!').find(2) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it "allows for validations" do
@@ -260,11 +260,11 @@ if defined?(ActiveRecord)
     describe Protector::Adapters::ActiveRecord::Association do
       describe "validates on create! within association" do
         it "when restricted from entity" do
-          expect { Dummy.first.restrict!('-').fluffies.create!(string: 'test').delete }.to raise_error
+          expect { Dummy.first.restrict!('-').fluffies.create!(string: 'test').delete }.to raise_error(ActiveRecord::RecordInvalid)
         end
 
         it "when restricted from association" do
-          expect { Dummy.first.fluffies.restrict!('-').create!(string: 'test').delete }.to raise_error
+          expect { Dummy.first.fluffies.restrict!('-').create!(string: 'test').delete }.to raise_error(ActiveRecord::RecordInvalid, /Validation failed: Access denied to 'string'/)
         end
       end
 

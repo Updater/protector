@@ -50,13 +50,13 @@ if defined?(Rails)
         expect{ dummy.restrict!.new params(string: 'test') }.to_not raise_error
         expect{ dummy.restrict!.create(params(string: 'test')).delete }.to_not raise_error
         expect{ dummy.restrict!.create!(params(string: 'test')).delete }.to_not raise_error
-        expect{ dummy.restrict!.new params(number: 1) }.to raise_error
+        expect{ dummy.restrict!.new params(number: 1) }.to raise_error(ActionController::UnpermittedParameters)
       end
 
       it "updates" do
         instance = dummy.create!
 
-        expect{ instance.restrict!.assign_attributes params(string: 'test') }.to raise_error
+        expect{ instance.restrict!.assign_attributes params(string: 'test') }.to raise_error(ActionController::UnpermittedParameters)
         expect{ instance.restrict!.assign_attributes params(number: 1) }.to_not raise_error
       end
     end
