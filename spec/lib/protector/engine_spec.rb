@@ -5,8 +5,10 @@ if defined?(Rails)
     before(:all) do
       Combustion.initialize! :active_record do
         config.protector.paranoid = true
-        config.action_controller.action_on_unpermitted_parameters = :raise
       end
+
+      # Combustion is not setting action_on_unpermitted_parameters in Rails 5.0
+      ActionController::Parameters.action_on_unpermitted_parameters = :raise
 
       Protector.activate!
 

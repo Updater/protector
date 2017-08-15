@@ -75,7 +75,6 @@ module Protector
 
         # Forwards protection subject to the new instance
         def new_with_protector(*args, &block)
-          binding.pry
           return new_without_protector(*args, &block) unless protector_subject?
 
           protector_permit_strong_params(args)

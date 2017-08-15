@@ -13,6 +13,8 @@ gem "pry-doc"
 gem "appraisal"
 gem "sqlite3", platform: :ruby
 gem "ruby-prof", platform: :ruby
+gem "pry-byebug"
+gem "pry-doc"
 gem "activerecord", "~> 4.2.0", require: "active_record"
 gem "activerecord-jdbcsqlite3-adapter", platform: :jruby, github: "jruby/activerecord-jdbc-adapter"
 

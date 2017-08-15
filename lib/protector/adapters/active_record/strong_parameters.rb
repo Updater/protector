@@ -4,7 +4,6 @@ module Protector
       module StrongParameters
         def self.sanitize!(args, is_new, meta)
           return if args[0].permitted?
-          binding.pry
           if is_new
             args[0] = args[0].permit(*meta.access[:create].keys) if meta.access.include? :create
           else
