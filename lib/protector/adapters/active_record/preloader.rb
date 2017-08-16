@@ -28,7 +28,7 @@ module Protector
 
             @meta ||= klass.protector_meta.evaluate(protector_subject)
 
-            scope_without_protector.merge(@meta.relation)
+            scope_without_protector.merge(@meta.relation).restrict!(protector_subject)
           end
         end
       end
