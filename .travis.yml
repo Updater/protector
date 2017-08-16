@@ -5,7 +5,7 @@ rvm:
 
 gemfile:
   - gemfiles/AR_4.2.gemfile
-  - gemfiles/AR_5.0.x.gemfile
+  - gemfiles/AR_5.0.1.gemfile
   - gemfiles/AR_5.1.1.gemfile
   - gemfiles/Rails_4.2.gemfile
   - gemfiles/Rails_5.0.1.gemfile
