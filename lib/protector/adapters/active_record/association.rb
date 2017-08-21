@@ -17,6 +17,7 @@ module Protector
 
         # Wraps every association with current subject
         def scope_with_protector(*args)
+          # binding.pry
           scope = scope_without_protector(*args)
           scope = scope.restrict!(protector_subject) if protector_subject?
           scope
@@ -24,6 +25,7 @@ module Protector
 
         # Forwards protection subject to the new instance
         def build_record_with_protector(*args)
+          # binding.pry
           return build_record_without_protector(*args) unless protector_subject?
           build_record_without_protector(*args).restrict!(protector_subject)
         end

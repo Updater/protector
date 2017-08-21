@@ -13,6 +13,7 @@ module Protector
         end
 
         def restrict!(*args)
+          # binding.pry
           @association.restrict!(*args)
           super
         end

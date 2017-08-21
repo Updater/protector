@@ -51,6 +51,22 @@ module Protector
           result
         end
 
+        def insecurely_preload(*args)
+          binding.pry
+
+          @insecure_associations = args.flat_map do |asso|
+            reflection = @klass._reflect_on_association(asso)
+            if reflection.class == ::ActiveRecord::Reflection::ThroughReflection
+               through = PreferredProvider._reflect_on_association(:entities).options[:through]
+              asso = [asso, through]
+            end
+
+            asso
+          end
+
+          preload(*args)
+        end
+
         # @note Unscoped relation drops properties and therefore should be re-restricted
         def unscoped
           return super unless protector_subject?
@@ -118,6 +134,7 @@ module Protector
         # * delaying built-in preloading to the stage where selection is restricted
         # * merging current relation with restriction (of self and every eager association)
         def exec_queries_with_protector(*args)
+          binding.pry if self.class == PreferredProvider::ActiveRecord_Relation
           return @records if loaded?
           return exec_queries_without_protector unless protector_subject?
 
@@ -129,10 +146,14 @@ module Protector
           # ourselves respecting security scopes FTW!
           associations, relation.preload_values = relation.preload_values, []
 
-          @records = relation.send(:exec_queries).each { |record| record.restrict!(subject) }
+          @records = relation.send(:exec_queries).each do |record|
+            record.insecure_associations = @insecure_associations
+            record.restrict!(subject)
+          end
 
           # Now we have @records restricted properly so let's preload associations!
           associations.each do |association|
+            binding.pry
             if ::ActiveRecord::Associations::Preloader.method_defined? :preload
               ::ActiveRecord::Associations::Preloader.new.preload(@records, association)
             else

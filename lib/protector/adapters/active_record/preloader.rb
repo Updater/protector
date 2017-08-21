@@ -24,6 +24,8 @@ module Protector
 
           # Restricts preloading association scope with subject of the owner
           def scope_with_protector(*args)
+            binding.pry
+            # self.owners.first.insecure_associations
             return scope_without_protector unless protector_subject?
 
             @meta ||= klass.protector_meta.evaluate(protector_subject)

@@ -6,6 +6,8 @@ module Protector
         extend ActiveSupport::Concern
 
         included do
+          attr_accessor :insecure_associations
+
           include Protector::DSL::Base
           include Protector::DSL::Entry
 
